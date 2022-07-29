@@ -15,10 +15,11 @@ int main()
         BeginDrawing();
         ClearBackground(WHITE);
 
-        
+
 
         // Stop Drawing
         EndDrawing();
     }
+    CloseWindow();
     
 }
