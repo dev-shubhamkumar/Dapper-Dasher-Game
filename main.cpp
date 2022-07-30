@@ -11,6 +11,11 @@ int main()
     // acceleration due to gravity (pixels/frame) / frame
     const int gravity{1};
 
+    // Loading Scarfy Sprites
+    Texture2D scarfy = LoadTexture("textures/scarfy.png");
+    Rectangle scarfyRec;
+    Vector2 scarfyPos;
+
     // rectangle dimensions
     const int width{50};
     const int height{80};
