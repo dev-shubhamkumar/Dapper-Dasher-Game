@@ -12,7 +12,25 @@ int main()
     // acceleration due to gravity (pixels/sec) / sec
     const int gravity{1'000};
 
-    // Loading Scarfy Sprites
+    // nebula varibales
+    Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
+    // Rectangle nebRec{0.0, 0.0, nebula.width/8, nebula.height/8};
+    Rectangle nebRec;
+    nebRec.height = int(nebula.height/8);
+    nebRec.width = int(nebula.width/8);
+    nebRec.x = 0;
+    nebRec.y = 0;
+    Vector2 nebPos{windowWidth, windowHeight - nebRec.height};
+
+    // nebula animation variables
+    int nebFrame{};
+    const float nebUpdateTime{1.0/12.0};
+    float nebRunningTime{};
+
+    // nebula x velocity
+    int nebVel{-200};
+
+    // Scarfy variables 
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
     Rectangle scarfyRec;
     scarfyRec.width = scarfy.width/6;
@@ -63,31 +81,52 @@ int main()
             isInAir = true;
         }
 
-        // ENVIRONMENT: Defining Velocity
+        // ENVIRONMENT: Jump Check
         if (IsKeyPressed(KEY_SPACE) && !isInAir)
         {
             velocity += jupmVel;
         }
 
+        // update nebula position
+        nebPos.x += nebVel * dT;
 
-        // update the position
+        // update scarfy position
         scarfyPos.y += velocity * dT;
 
-
-        // update running time
-        runningTime += dT;
-        if (runningTime >= updateTime)
+        // update scarfy animation frame
+        if (!isInAir) 
         {
-            runningTime = 0;
-            // Update animation frame
-            scarfyRec.x = frame * scarfyRec.width;
-            frame++;
-            if (frame > 5)
+            runningTime += dT;
+            if (runningTime >= updateTime)
             {
-                frame = 0;
+                runningTime = 0;
+                // Update animation frame
+                scarfyRec.x = frame * scarfyRec.width;
+                frame++;
+                if (frame > 5)
+                {
+                    frame = 0;
+                }
+            }
+        }
+
+        // update nebula animation frame
+        nebRunningTime += dT;
+        if (nebRunningTime >= nebUpdateTime)
+        {
+            nebRunningTime = 0.0;
+            nebRec.x = nebFrame * nebRec.width;
+            nebFrame++;
+            if (nebFrame > 7)
+            {
+                nebFrame = 0;
             }
         }
         
+        // Draw Nebula
+        DrawTextureRec(nebula, nebRec, nebPos, BLACK);
+
+        // Draw Scarfy
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
         // Stop Drawing
@@ -96,5 +135,6 @@ int main()
 
     // Unload texture before closing the program
     UnloadTexture(scarfy);
+    UnloadTexture(nebula);
     CloseWindow();
 }
