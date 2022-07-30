@@ -1,5 +1,6 @@
 #include "raylib.h"
 
+
 int main()
 {
     // window dimensions
@@ -22,7 +23,15 @@ int main()
     scarfyPos.x = windowWidth/2 - scarfyRec.width/2;
     scarfyPos.y = windowHeight - scarfyRec.height;
 
+    // animation frame
+    int frame{};
 
+    // assigning updateTime for animation to update
+    const float updateTime{1.0/12.0};
+    float runningTime{};
+
+
+    // Defining Velocity
     int velocity{0};
 
     // Defining jupm velocity
@@ -60,12 +69,25 @@ int main()
             velocity += jupmVel;
         }
 
+
         // update the position
         scarfyPos.y += velocity * dT;
 
 
+        // update running time
+        runningTime += dT;
+        if (runningTime >= updateTime)
+        {
+            runningTime = 0;
+            // Update animation frame
+            scarfyRec.x = frame * scarfyRec.width;
+            frame++;
+            if (frame > 5)
+            {
+                frame = 0;
+            }
+        }
         
-
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
         // Stop Drawing
