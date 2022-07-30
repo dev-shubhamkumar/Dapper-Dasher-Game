@@ -18,6 +18,12 @@ int main()
     int posY{windowHeight - height};
     int velocity{0};
 
+    // Defining jupm velocity
+    const int jupmVel{-22};
+
+    // creating variable to check if object is in air
+    bool isInAir{};
+
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
@@ -25,24 +31,30 @@ int main()
         BeginDrawing();
         ClearBackground(WHITE);
 
-        // performing ground check
+        // ENVIRONMENT: performing ground check and applying gravity
         if (posY >= windowHeight - height)
         {
             // rectangle is on the ground - do not apply gravity
             velocity = 0;
+            isInAir = false;
         }
         else {
             //apply gravity
             velocity += gravity;
+            isInAir = true;
         }
 
-        if (IsKeyPressed(KEY_SPACE))
+        // ENVIRONMENT: Defining Velocity
+        if (IsKeyPressed(KEY_SPACE) && !isInAir)
         {
-            velocity -= 10;
+            velocity += jupmVel;
         }
 
         // update the position
         posY += velocity;
+
+
+        
 
         DrawRectangle(windowHeight/2, posY, width, height, BLUE);
 
