@@ -8,8 +8,8 @@ int main()
     // Initialize the window
     InitWindow(windowWidth, windowHeight, "Dasher Dapper Game");
 
-    // acceleration due to gravity (pixels/frame) / frame
-    const int gravity{1};
+    // acceleration due to gravity (pixels/sec) / sec
+    const int gravity{1'000};
 
     // Loading Scarfy Sprites
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
@@ -26,7 +26,7 @@ int main()
     int velocity{0};
 
     // Defining jupm velocity
-    const int jupmVel{-22};
+    const int jupmVel{-600};
 
     // creating variable to check if object is in air
     bool isInAir{};
@@ -34,6 +34,9 @@ int main()
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
+        // delta time (time since last frame)
+        float dT{GetFrameTime()};
+        
         // Start Drawing
         BeginDrawing();
         ClearBackground(WHITE);
@@ -47,7 +50,7 @@ int main()
         }
         else {
             //apply gravity
-            velocity += gravity;
+            velocity += gravity * dT;
             isInAir = true;
         }
 
@@ -58,7 +61,7 @@ int main()
         }
 
         // update the position
-        scarfyPos.y += velocity;
+        scarfyPos.y += velocity * dT;
 
 
         
