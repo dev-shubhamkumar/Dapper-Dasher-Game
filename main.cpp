@@ -14,13 +14,15 @@ int main()
     // Loading Scarfy Sprites
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
     Rectangle scarfyRec;
+    scarfyRec.width = scarfy.width/6;
+    scarfyRec.height = scarfy.height;
+    scarfyRec.x = 0;
+    scarfyRec.y = 0;
     Vector2 scarfyPos;
+    scarfyPos.x = windowWidth/2 - scarfyRec.width/2;
+    scarfyPos.y = windowHeight - scarfyRec.height;
 
-    // rectangle dimensions
-    const int width{50};
-    const int height{80};
 
-    int posY{windowHeight - height};
     int velocity{0};
 
     // Defining jupm velocity
@@ -37,7 +39,7 @@ int main()
         ClearBackground(WHITE);
 
         // ENVIRONMENT: performing ground check and applying gravity
-        if (posY >= windowHeight - height)
+        if (scarfyPos.y >= windowHeight - scarfyRec.height)
         {
             // rectangle is on the ground - do not apply gravity
             velocity = 0;
@@ -56,16 +58,18 @@ int main()
         }
 
         // update the position
-        posY += velocity;
+        scarfyPos.y += velocity;
 
 
         
 
-        DrawRectangle(windowHeight/2, posY, width, height, BLUE);
+        DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
         // Stop Drawing
         EndDrawing();
     }
+
+    // Unload texture before closing the program
+    UnloadTexture(scarfy);
     CloseWindow();
-    
 }
