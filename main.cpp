@@ -29,6 +29,9 @@ int main()
     // acceleration due to gravity (pixels/sec) / sec
     const int gravity{1'000};
 
+
+
+
     // nebula varibales
     Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
 
@@ -48,9 +51,11 @@ int main()
 
         nebulae[i].pos.x = windowDimensions[0] + i*300;
     }
-
     // nebula x velocity
     int nebVel{-200};
+
+    
+
 
     // Scarfy variables 
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
@@ -65,14 +70,20 @@ int main()
     scarfyData.updateTime = 1.0/12.0;
     scarfyData.runningTime = 0.0;
 
-    // Defining Velocity
+    // Defining Scarfy Velocity
     int velocity{0};
 
     // Defining jupm velocity
     const int jupmVel{-600};
 
+
+
+
     // creating variable to check if object is in air
     bool isInAir{};
+
+
+
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
@@ -83,6 +94,9 @@ int main()
         // Start Drawing
         BeginDrawing();
         ClearBackground(WHITE);
+
+
+
 
         // ENVIRONMENT: performing ground check and applying gravity
         if (isOnGround(scarfyData, windowDimensions[1]))
@@ -103,12 +117,17 @@ int main()
             velocity += jupmVel;
         }
 
+
+
+
         // update nebula position
         for (int i = 0; i < sizeOfNebulae; i++)
         {
             // update the position of each nebula
             nebulae[i].pos.x += nebVel * dT;
         }
+
+
 
 
         // update scarfy position
@@ -131,6 +150,9 @@ int main()
             }
         }
 
+
+
+
         for (int i = 0; i < sizeOfNebulae; i++)
         {
             // update nebula animation frame
@@ -147,14 +169,20 @@ int main()
             }
         }
 
+
+
+
+        // draw nebula
         for (int i = 0; i < sizeOfNebulae; i++)
         {
-            // draw nebula
             DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
         }
 
         // Draw Scarfy
         DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+
+
+
 
         // Stop Drawing
         EndDrawing();
