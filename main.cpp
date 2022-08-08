@@ -23,7 +23,7 @@ AnimData updateAnimData(AnimData data, float deltaTime, int maxFrame)
         data.runningTime = 0.0;
         // update animation frame
         data.rec.x = data.frame * data.rec.width;
-        data.frame;
+        data.frame++;
         if (data.frame > maxFrame)
         {
             data.frame = 0;
@@ -154,18 +154,7 @@ int main()
         // update scarfy animation frame
         if (!isInAir) 
         {
-            scarfyData.runningTime += dT;
-            if (scarfyData.runningTime >= scarfyData.updateTime)
-            {
-                scarfyData.runningTime = 0;
-                // Update animation frame
-                scarfyData.rec.x = scarfyData.frame * scarfyData.rec.width;
-                scarfyData.frame++;
-                if (scarfyData.frame > 5)
-                {
-                    scarfyData.frame = 0;
-                }
-            }
+            scarfyData = updateAnimData(scarfyData, dT, 5);
         }
 
 
@@ -174,17 +163,7 @@ int main()
         for (int i = 0; i < sizeOfNebulae; i++)
         {
             // update nebula animation frame
-            nebulae[i].runningTime += dT;
-            if (nebulae[i].runningTime >= nebulae[i].updateTime)
-            {
-                nebulae[i].runningTime = 0.0;
-                nebulae[i].rec.x = nebulae[i].frame * nebulae[i].rec.width;
-                nebulae[i].frame++;
-                if (nebulae[i].frame > 7)
-                { 
-                    nebulae[i].frame = 0;
-                }
-            }
+            nebulae[i] = updateAnimData(nebulae[i], dT, 7);
         }
 
 
